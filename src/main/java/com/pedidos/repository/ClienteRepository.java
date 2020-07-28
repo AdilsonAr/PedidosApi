@@ -10,5 +10,5 @@ import com.pedidos.model.Cliente;
  */
 @Repository
 public interface ClienteRepository  extends JpaRepository<Cliente, Integer>{
-
+	public Cliente findByUser(String user);
 }

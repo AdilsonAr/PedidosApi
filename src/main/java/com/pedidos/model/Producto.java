@@ -34,6 +34,12 @@ public class Producto {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Producto(String descripcion, double precio) {
+		super();
+		this.descripcion = descripcion;
+		this.precio = precio;
+	}
+
 	public Producto(String descripcion, double precio, List<DetallePedido> detalles) {
 		super();
 		this.descripcion = descripcion;

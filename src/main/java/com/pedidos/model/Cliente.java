@@ -25,7 +25,7 @@ public class Cliente {
 	private String user;
 	@Column
 	private String nombre;
-	@OneToMany(mappedBy="pedido",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL)
 	private List<Pedido> pedidos;
 	public Cliente(String user, String nombre, List<Pedido> pedidos) {
 		super();
