@@ -22,4 +22,8 @@ public class ProductoService {
 	public List<Producto> readAll(){
 		return productoRepo.findAll();
 	}
+	
+	public Producto readId(int id) {
+		return productoRepo.getOne(id);
+	}
 }
