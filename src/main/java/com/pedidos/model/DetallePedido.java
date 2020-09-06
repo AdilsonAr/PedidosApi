@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
 @Entity
 @Table(name="DetallePedido")
-public class DetallePedido {
+public class DetallePedido{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -23,9 +25,11 @@ public class DetallePedido {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="idPedido")
+	@JsonBackReference(value="pedido-detalle")
 	private Pedido pedido;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="idProducto",nullable = false)
+	@JsonBackReference(value="producto-detalle")
 	private Producto producto;
 	public DetallePedido() {
 		super();

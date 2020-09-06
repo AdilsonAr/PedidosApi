@@ -10,13 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
 @Entity
 @Table(name="cliente")
-public class Cliente {
+public class Cliente{
+
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -26,6 +29,7 @@ public class Cliente {
 	@Column
 	private String nombre;
 	@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL)
+	@JsonManagedReference(value="pedido-cliente")
 	private List<Pedido> pedidos;
 	public Cliente(String user, String nombre, List<Pedido> pedidos) {
 		super();
@@ -33,6 +37,13 @@ public class Cliente {
 		this.nombre = nombre;
 		this.pedidos = pedidos;
 	}
+	
+	public Cliente(String user, String nombre) {
+		super();
+		this.user = user;
+		this.nombre = nombre;
+	}
+	
 	public Cliente() {
 		super();
 	}

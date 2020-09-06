@@ -11,13 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
 @Entity
 @Table(name = "producto")
-public class Producto {
+public class Producto{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -27,6 +29,7 @@ public class Producto {
 	@Column
 	private double precio;
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+	@JsonManagedReference(value="producto-detalle")
 	private List<DetallePedido> detalles;
 
 	public Producto() {

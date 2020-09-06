@@ -19,11 +19,19 @@ public class ProductoService {
 		return productoRepo.save(producto);
 	}
 	
+	public Producto update(Producto producto) {
+		return productoRepo.save(producto);
+	}
+	
+	public void delete(Producto producto) {
+		productoRepo.delete(producto);
+	}
+	
 	public List<Producto> readAll(){
 		return productoRepo.findAll();
 	}
 	
 	public Producto readId(int id) {
-		return productoRepo.getOne(id);
+		return productoRepo.findById(id).get();
 	}
 }

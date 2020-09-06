@@ -14,13 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
 @Entity
 @Table(name="pedido")
-public class Pedido {
+public class Pedido{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -28,9 +31,11 @@ public class Pedido {
 	@Column
 	private LocalDate fecha;
 	@OneToMany(mappedBy = "pedido",cascade=CascadeType.ALL)
+	@JsonManagedReference(value="pedido-detalle")
 	private List<DetallePedido> detalles;
 	@ManyToOne(fetch=FetchType.LAZY,optional = false)
 	@JoinColumn(name="idCliente",nullable = false)
+	@JsonBackReference(value="pedido-cliente")
 	private Cliente cliente;
 	public Pedido() {
 		super();
@@ -42,6 +47,13 @@ public class Pedido {
 		this.detalles = detalles;
 		this.cliente = cliente;
 	}
+	
+	public Pedido(LocalDate fecha, Cliente cliente) {
+		super();
+		this.fecha = fecha;
+		this.cliente = cliente;
+	}
+	
 	public int getIdPedido() {
 		return idPedido;
 	}
