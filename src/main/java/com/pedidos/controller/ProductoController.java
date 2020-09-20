@@ -37,7 +37,7 @@ public class ProductoController {
 	}
 	
 	@DeleteMapping("/delete")
-	public String delete(@RequestBody int id) {
+	public String delete(@RequestParam int id) {
 		Producto p=productoService.readId(id);
 		productoService.delete(p);
 		return "producto "+p.getIdProducto() + "eliminado";

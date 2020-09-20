@@ -1,5 +1,6 @@
 package com.pedidos.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,18 @@ public class DetallePedidoController {
 	public List<DetallePedido> readproducto(@RequestParam("id") int id) {
 		Producto p=productoService.readId(id);
 		return detalleService.readProducto(p);
+	}
+
+	//los productos incluidos en un pedido
+	@GetMapping("/readproductopedido")
+	public List<Producto> readproductopedido(@RequestParam("id") int id) {
+		List<Producto> ls=new ArrayList<Producto>();
+		
+		Pedido p=pedidoService.readId(id);
+		List<DetallePedido> l= p.getDetalles();
+		 
+		l.forEach(x-> ls.add(x.getProducto()));
+		return ls;
 	}
 	
 	@PostMapping("/create")

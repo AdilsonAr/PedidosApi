@@ -15,6 +15,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
+
+//relaciona un pedido con un producto
+
 @Entity
 @Table(name="DetallePedido")
 public class DetallePedido{
@@ -23,14 +26,18 @@ public class DetallePedido{
 	@Column
 	private int idDetallePedido;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	//un grupo de objetos DetallePedido estan relacionados a un pedido
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="idPedido")
 	@JsonBackReference(value="pedido-detalle")
 	private Pedido pedido;
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="idProducto",nullable = false)
+	
+	//un grupo de objetos DetallePedido estan relacionados a un producto
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="idProducto")
 	@JsonBackReference(value="producto-detalle")
 	private Producto producto;
+	
 	public DetallePedido() {
 		super();
 	}
