@@ -1,4 +1,4 @@
-package com.pedidos.controller;
+ package com.pedidos.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +33,12 @@ public class PedidoController {
 	@GetMapping("/readid")
 	public Pedido readid(@RequestParam("id") int id) {
 		return pedidoService.readId(id);
+	}
+	
+	@GetMapping("/readcliente")
+	public List<Pedido> readcliente(@RequestParam("id") int id) {
+		Cliente c=cliService.readid(id);
+		return pedidoService.readCliente(c);
 	}
 	
 	@GetMapping("/readall")

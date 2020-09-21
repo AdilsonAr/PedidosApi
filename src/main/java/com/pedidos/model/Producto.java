@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /*
  * Author:Adilson Arbuez
@@ -29,7 +29,7 @@ public class Producto{
 	@Column
 	private double precio;
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-	@JsonManagedReference(value="producto-detalle")
+	@JsonBackReference(value="producto-detalle")
 	private List<DetallePedido> detalles;
 
 	public Producto() {

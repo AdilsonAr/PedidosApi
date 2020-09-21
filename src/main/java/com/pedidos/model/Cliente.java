@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
@@ -29,7 +29,7 @@ public class Cliente{
 	@Column
 	private String nombre;
 	@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL)
-	@JsonManagedReference(value="pedido-cliente")
+	@JsonBackReference(value="pedido-cliente")
 	private List<Pedido> pedidos;
 	public Cliente(String user, String nombre, List<Pedido> pedidos) {
 		super();

@@ -2,7 +2,6 @@ package com.pedidos.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
@@ -27,15 +26,15 @@ public class DetallePedido{
 	private int idDetallePedido;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un pedido
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="idPedido")
-	@JsonBackReference(value="pedido-detalle")
+	@JsonManagedReference(value="pedido-detalle")
 	private Pedido pedido;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un producto
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="idProducto")
-	@JsonBackReference(value="producto-detalle")
+	@JsonManagedReference(value="producto-detalle")
 	private Producto producto;
 	
 	public DetallePedido() {

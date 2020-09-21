@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,11 +30,11 @@ public class Pedido{
 	@Column
 	private LocalDate fecha;
 	@OneToMany(mappedBy = "pedido",cascade=CascadeType.ALL)
-	@JsonManagedReference(value="pedido-detalle")
+	@JsonBackReference(value="pedido-detalle")
 	private List<DetallePedido> detalles;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="idCliente")
-	@JsonBackReference(value="pedido-cliente")
+	@JsonManagedReference(value="pedido-cliente")
 	private Cliente cliente;
 	public Pedido() {
 		super();
