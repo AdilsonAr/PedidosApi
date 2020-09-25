@@ -1,9 +1,9 @@
 package com.pedidos.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /*
  * Author:Adilson Arbuez
@@ -22,24 +22,44 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Producto{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	private int idProducto;
-	@Column
 	private String descripcion;
-	@Column
+	private LocalDate adquirido;
+	private LocalDate caducidad;
 	private double precio;
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-	@JsonBackReference(value="producto-detalle")
+	@JsonManagedReference(value="producto-detalle")
 	private List<DetallePedido> detalles;
+	
+	
+	public LocalDate getAdquirido() {
+		return adquirido;
+	}
+	
+	
+
+	public void setAdquirido(LocalDate adquirido) {
+		this.adquirido = adquirido;
+	}
+
+	public LocalDate getCaducidad() {
+		return caducidad;
+	}
+
+	public void setCaducidad(LocalDate caducidad) {
+		this.caducidad = caducidad;
+	}
 
 	public Producto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Producto(String descripcion, double precio) {
+	public Producto(String descripcion, LocalDate adquirido, LocalDate caducidad, double precio) {
 		super();
 		this.descripcion = descripcion;
+		this.adquirido = adquirido;
+		this.caducidad = caducidad;
 		this.precio = precio;
 	}
 

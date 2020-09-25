@@ -1,7 +1,7 @@
 package com.pedidos.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
@@ -22,29 +22,40 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class DetallePedido{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	private int idDetallePedido;
+	private int unidades;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un pedido
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="idPedido")
-	@JsonManagedReference(value="pedido-detalle")
+	@JsonBackReference(value="pedido-detalle")
 	private Pedido pedido;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un producto
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="idProducto")
-	@JsonManagedReference(value="producto-detalle")
+	@JsonBackReference(value="producto-detalle")
 	private Producto producto;
 	
 	public DetallePedido() {
 		super();
 	}
-	public DetallePedido(Pedido pedido, Producto producto) {
+	
+	public DetallePedido(int unidades, Pedido pedido, Producto producto) {
 		super();
+		this.unidades = unidades;
 		this.pedido = pedido;
 		this.producto = producto;
 	}
+
+	public int getUnidades() {
+		return unidades;
+	}
+
+	public void setUnidades(int unidades) {
+		this.unidades = unidades;
+	}
+
 	public Pedido getPedido() {
 		return pedido;
 	}

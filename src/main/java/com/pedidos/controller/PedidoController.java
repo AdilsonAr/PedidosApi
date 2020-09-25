@@ -33,7 +33,7 @@ public class PedidoController {
 	@GetMapping("/readid")
 	public Pedido readid(@RequestParam("id") int id) {
 		return pedidoService.readId(id);
-	}
+	} 
 	
 	@GetMapping("/readcliente")
 	public List<Pedido> readcliente(@RequestParam("id") int id) {

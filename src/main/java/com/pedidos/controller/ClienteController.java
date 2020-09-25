@@ -29,6 +29,11 @@ public class ClienteController {
 		return cliService.readid(id);
 	}
 	
+	@GetMapping("/test")
+	public void test(){
+		cliService.readall();
+	}
+	
 	@GetMapping("/readall")
 	public List<Cliente> readall(){
 		return cliService.readall();

@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Pedido{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	private int idPedido;
-	@Column
 	private LocalDate fecha;
 	@OneToMany(mappedBy = "pedido",cascade=CascadeType.ALL)
-	@JsonBackReference(value="pedido-detalle")
+	@JsonManagedReference(value="pedido-detalle")
 	private List<DetallePedido> detalles;
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="idCliente")
-	@JsonManagedReference(value="pedido-cliente")
+	@JsonBackReference(value="pedido-cliente")
 	private Cliente cliente;
 	public Pedido() {
 		super();

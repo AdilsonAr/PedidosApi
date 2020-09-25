@@ -3,7 +3,6 @@ package com.pedidos.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,37 +10,49 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
  * Author:Adilson Arbuez
  * date: 27/07/2020
  */
+
 @Entity
 @Table(name="cliente")
 public class Cliente{
 
-	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int idCliente;
-	@Column
 	private String user;
-	@Column
 	private String nombre;
+	private String telefono;
+	
 	@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL)
-	@JsonBackReference(value="pedido-cliente")
+	@JsonManagedReference(value="pedido-cliente")
 	private List<Pedido> pedidos;
-	public Cliente(String user, String nombre, List<Pedido> pedidos) {
+	
+	public Cliente(String user, String nombre, String telefono, List<Pedido> pedidos) {
 		super();
 		this.user = user;
 		this.nombre = nombre;
+		this.telefono = telefono;
 		this.pedidos = pedidos;
 	}
-	
-	public Cliente(String user, String nombre) {
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public Cliente(String user, String nombre,String telefono) {
 		super();
 		this.user = user;
 		this.nombre = nombre;
+		this.telefono = telefono;
 	}
 	
 	public Cliente() {
