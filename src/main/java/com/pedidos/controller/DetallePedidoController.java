@@ -1,6 +1,5 @@
 package com.pedidos.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * date: 11/08/2020
  */
 
+import com.pedidos.dto.DetallePedidoDTO;
 import com.pedidos.model.DetallePedido;
 import com.pedidos.model.Pedido;
 import com.pedidos.model.Producto;
@@ -30,51 +30,41 @@ public class DetallePedidoController {
 	PedidoService pedidoService;
 	@Autowired
 	ProductoService productoService;
+	@Autowired
+	DetallePedidoDTO detalledto;
 	
 	@GetMapping("/readpedido")
-	public List<DetallePedido> readpedido(@RequestParam("id") int id) {
+	public List<DetallePedidoDTO> readpedido(@RequestParam("id") int id) {
 		Pedido p=pedidoService.readId(id);
-		return detalleService.readPedido(p);
+		return detalledto.toDTO(detalleService.readPedido(p));
 	}
 	
 	@GetMapping("readid")
-	public DetallePedido readid(@RequestParam("id") int id) {
-		return detalleService.readId(id);
+	public DetallePedidoDTO readid(@RequestParam("id") int id) {
+		return detalledto.toDTO(detalleService.readId(id));
 	}
 	
 	@GetMapping("/readproducto")
-	public List<DetallePedido> readproducto(@RequestParam("id") int id) {
+	public List<DetallePedidoDTO> readproducto(@RequestParam("id") int id) {
 		Producto p=productoService.readId(id);
-		return detalleService.readProducto(p);
-	}
-
-	//los productos incluidos en un pedido
-	@GetMapping("/readproductopedido")
-	public List<Producto> readproductopedido(@RequestParam("id") int id) {
-		List<Producto> ls=new ArrayList<Producto>();
-		
-		Pedido p=pedidoService.readId(id);
-		List<DetallePedido> l= p.getDetalles();
-		 
-		l.forEach(x-> ls.add(x.getProducto()));
-		return ls;
+		return detalledto.toDTO(detalleService.readProducto(p));
 	}
 	
 	@PostMapping("/create")
-	public String create(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido) {
+	public String create(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido,@RequestParam("unidades") int u) {
 		Producto producto=productoService.readId(idProducto);
 		Pedido pedido=pedidoService.readId(idPedido);
-		DetallePedido detalle=new DetallePedido(pedido,producto);
-		detalleService.create(detalle);
+		DetallePedidoDTO detalle=new DetallePedidoDTO(u, pedido,producto);
+		detalleService.create(detalledto.toModel(detalle));
 		return "detalle "+detalle.getIdDetallePedido()+"creado";
 	}
 	
 	@PostMapping("/update")
-	public String update(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido) {
+	public String update(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido,@RequestParam("unidades") int u) {
 		Producto producto=productoService.readId(idProducto);
 		Pedido pedido=pedidoService.readId(idPedido);
-		DetallePedido detalle=new DetallePedido(pedido,producto);
-		detalleService.update(detalle);
+		DetallePedidoDTO detalle=new DetallePedidoDTO(u,pedido,producto);
+		detalleService.update(detalledto.toModel(detalle));
 		return "detalle "+detalle.getIdDetallePedido()+"modificado";
 	}
 	

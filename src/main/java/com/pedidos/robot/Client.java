@@ -11,6 +11,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
+/*
+ * Author:Adilson Arbuez
+ */
+
 public class Client {
 	 String endpoint="http://localhost:8080/";
      String consulta="pedido/readall";
@@ -18,9 +22,7 @@ public class Client {
 	
 	HttpClientBuilder builder=HttpClients.custom();
 	HttpClient client=builder.build();
-	
 	HttpGet rq=new HttpGet(url);
-	
 	
 	public void consultar() throws ClientProtocolException, IOException {
 		rq.addHeader("Content_Type","application/json");

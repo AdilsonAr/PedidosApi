@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pedidos.dto.ClienteDTO;
 import com.pedidos.model.Cliente;
 import com.pedidos.service.ClienteService;
 /*
@@ -23,10 +24,13 @@ import com.pedidos.service.ClienteService;
 public class ClienteController {
 	@Autowired
 	ClienteService cliService;
+	@Autowired
+	ClienteDTO clidto;
 	
 	@GetMapping("/readid")
-	public Cliente readid(@RequestParam("id") int id) {
-		return cliService.readid(id);
+	public ClienteDTO readid(@RequestParam("id") int id) {
+		Cliente c= cliService.readid(id);
+		return clidto.toDTO(c);
 	}
 	
 	@GetMapping("/test")
@@ -35,19 +39,19 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/readall")
-	public List<Cliente> readall(){
-		return cliService.readall();
+	public List<ClienteDTO> readall(){
+		return clidto.toDTO(cliService.readall());
 	}
 	
 	@PostMapping("/create")
-	public String create(@RequestBody Cliente cli) {
-		Cliente c=cliService.create(cli);
+	public String create(@RequestBody ClienteDTO cli) {
+		Cliente c=cliService.create(clidto.toModel(cli));
 		return "cliente" + c.getIdCliente() + "creado";
 	}
 	
 	@PutMapping("/update")
-	public String update(@RequestBody Cliente cli) {
-		Cliente c=cliService.update(cli);
+	public String update(@RequestBody ClienteDTO cli) {
+		Cliente c=cliService.update(clidto.toModel(cli));
 		return "cliente" + c.getIdCliente() + "modificado";
 	}
 	

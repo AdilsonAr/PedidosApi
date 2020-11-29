@@ -1,5 +1,8 @@
 package com.pedidos.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pedidos.model.DetallePedido;
 import com.pedidos.model.Pedido;
 import com.pedidos.model.Producto;
@@ -45,11 +48,24 @@ public class DetallePedidoDTO {
 		this.producto = producto;
 	}
 	
+	public DetallePedidoDTO(int unidades, Pedido pedido, Producto producto) {
+		super();
+		this.unidades = unidades;
+		this.pedido = pedido;
+		this.producto = producto;
+	}
+	
 	public DetallePedido toModel(DetallePedidoDTO d) {
 		return new DetallePedido(d.getUnidades(),d.getPedido(),d.getProducto());
 	}
 	
 	public DetallePedidoDTO toDTO(DetallePedido d) {
 		return new DetallePedidoDTO(d.getIdDetallePedido(),d.getUnidades(),d.getPedido(),d.getProducto());
+	}
+	
+	public List<DetallePedidoDTO> toDTO(List<DetallePedido> l) {
+		List<DetallePedidoDTO> listdto =new ArrayList<DetallePedidoDTO>();
+		l.forEach(x->listdto.add(toDTO(x)));
+		return listdto;
 	}
 }

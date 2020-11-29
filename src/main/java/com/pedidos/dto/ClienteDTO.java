@@ -1,5 +1,8 @@
 package com.pedidos.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pedidos.model.Cliente;
 
 public class ClienteDTO {
@@ -49,5 +52,11 @@ public class ClienteDTO {
 	
 	public ClienteDTO toDTO(Cliente c) {
 		return new ClienteDTO(c.getIdCliente(),c.getUser(),c.getNombre(),c.getTelefono());
+	}
+	
+	public List<ClienteDTO> toDTO(List<Cliente> l) {
+		List<ClienteDTO> listdto =new ArrayList<ClienteDTO>();
+		l.forEach(x->listdto.add(toDTO(x)));
+		return listdto;
 	}
 }

@@ -1,6 +1,8 @@
 package com.pedidos.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pedidos.model.Cliente;
 import com.pedidos.model.Pedido;
@@ -33,6 +35,13 @@ public class PedidoDTO{
 		this.fecha = fecha;
 		this.cliente = cliente;
 	}
+	
+	public PedidoDTO(LocalDate fecha, Cliente cliente) {
+		super();
+		this.fecha = fecha;
+		this.cliente = cliente;
+	}
+	
 	public PedidoDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -44,6 +53,12 @@ public class PedidoDTO{
 	
 	public PedidoDTO toDTO(Pedido p) {
 		return new PedidoDTO(p.getIdPedido(),p.getFecha(),p.getCliente());
+	}
+	
+	public List<PedidoDTO> toDTO(List<Pedido> l) {
+		List<PedidoDTO> listdto =new ArrayList<PedidoDTO>();
+		l.forEach(x->listdto.add(toDTO(x)));
+		return listdto;
 	}
 	
 }

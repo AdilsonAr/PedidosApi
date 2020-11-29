@@ -1,6 +1,8 @@
 package com.pedidos.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pedidos.model.Producto;
 
@@ -62,5 +64,11 @@ public class ProductoDTO {
 
 	public Producto toModel(ProductoDTO p) {
 		return new Producto(p.getDescripcion(), p.getAdquirido(), p.getCaducidad(),getPrecio());
+	}
+	
+	public List<ProductoDTO> toDTO(List<Producto> l) {
+		List<ProductoDTO> listdto =new ArrayList<ProductoDTO>();
+		l.forEach(x->listdto.add(toDTO(x)));
+		return listdto;
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pedidos.dto.PedidoDTO;
 import com.pedidos.model.Cliente;
 import com.pedidos.model.Pedido;
 import com.pedidos.service.ClienteService;
@@ -29,38 +30,40 @@ public class PedidoController {
 	PedidoService pedidoService;
 	@Autowired
 	ClienteService cliService;
+	@Autowired
+	PedidoDTO pedidodto;
 	
 	@GetMapping("/readid")
-	public Pedido readid(@RequestParam("id") int id) {
-		return pedidoService.readId(id);
+	public PedidoDTO readid(@RequestParam("id") int id) {
+		return pedidodto.toDTO(pedidoService.readId(id));
 	} 
 	
 	@GetMapping("/readcliente")
-	public List<Pedido> readcliente(@RequestParam("id") int id) {
+	public List<PedidoDTO> readcliente(@RequestParam("id") int id) {
 		Cliente c=cliService.readid(id);
-		return pedidoService.readCliente(c);
+		return pedidodto.toDTO(pedidoService.readCliente(c));
 	}
 	
 	@GetMapping("/readall")
-	public List<Pedido> readall(){
-		return pedidoService.readall();
+	public List<PedidoDTO> readall(){
+		return pedidodto.toDTO(pedidoService.readall());
 	}
 	
 	@GetMapping("/readfecha")
-	public List<Pedido> readfecha(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha){
-		return pedidoService.readFecha(fecha);
+	public List<PedidoDTO> readfecha(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha){
+		return pedidodto.toDTO(pedidoService.readFecha(fecha));
 	}
-	
+	 
 	@GetMapping("/readrangofecha")
-	public List<Pedido> readfecha(@RequestParam("fecha1") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha1,
+	public List<PedidoDTO> readfecha(@RequestParam("fecha1") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha1,
 			@RequestParam("fecha2") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha2){
-		return pedidoService.readFechaRango(fecha1, fecha2);
+		return pedidodto.toDTO(pedidoService.readFechaRango(fecha1, fecha2));
 	}
 	
 	@PostMapping("/create")
 	public String create(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha, @RequestParam("idCliente") int idCliente) {
 		Cliente cli=cliService.readid(idCliente);
-		Pedido p=pedidoService.create(new Pedido(fecha,cli));
+		Pedido p=pedidoService.create(pedidodto.toModel(new PedidoDTO(fecha,cli)));
 		return "pedido "+p.getIdPedido() + "creado";
 	}
 	
@@ -75,7 +78,7 @@ public class PedidoController {
 	@PutMapping("/update")
 	public String update(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha, @RequestParam("idCliente") int idCliente) {
 		Cliente cli=cliService.readid(idCliente);
-		Pedido p=pedidoService.update(new Pedido(fecha,cli));
+		Pedido p=pedidoService.update(pedidodto.toModel(new PedidoDTO(fecha,cli)));
 		return "pedido "+p.getIdPedido() + "modificado";
 	}
 }
