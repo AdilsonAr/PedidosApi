@@ -1,7 +1,6 @@
 package com.pedidos.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,13 +25,13 @@ public class DetallePedido{
 	private int unidades;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un pedido
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="idPedido")
 	@JsonBackReference(value="pedido-detalle")
 	private Pedido pedido;
 	
 	//un grupo de objetos DetallePedido estan relacionados a un producto
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="idProducto")
 	@JsonBackReference(value="producto-detalle")
 	private Producto producto;

@@ -31,13 +31,10 @@ public class Producto{
 	@JsonManagedReference(value="producto-detalle")
 	private List<DetallePedido> detalles;
 	
-	
 	public LocalDate getAdquirido() {
 		return adquirido;
 	}
 	
-	
-
 	public void setAdquirido(LocalDate adquirido) {
 		this.adquirido = adquirido;
 	}

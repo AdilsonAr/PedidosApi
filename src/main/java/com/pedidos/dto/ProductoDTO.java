@@ -4,16 +4,25 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pedidos.model.Producto;
+import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pedidos.model.Producto;
+@Component
 public class ProductoDTO {
 	private int idProducto;
 	private String descripcion;
-	private double precio;
-	private LocalDate adquirido;
+	private double precio;  
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)  
+	
+	private LocalDate adquirido; 
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)  
 	private LocalDate caducidad;
 	
-	public String getDescripcion() {
+	public String getDescripcion() { 
 		return descripcion;
 	}
 	public void setDescripcion(String descripcion) {
@@ -57,13 +66,21 @@ public class ProductoDTO {
 		this.adquirido = adquirido;
 		this.caducidad = caducidad;
 	}
+	
+	public ProductoDTO(String descripcion, double precio, LocalDate adquirido, LocalDate caducidad) {
+		super();
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.adquirido = adquirido;
+		this.caducidad = caducidad;
+	}
 
 	public ProductoDTO toDTO(Producto p) {
-		return new ProductoDTO(p.getIdProducto(), p.getDescripcion(), getPrecio(), p.getAdquirido(), p.getCaducidad());
+		return new ProductoDTO(p.getIdProducto(), p.getDescripcion(), p.getPrecio(), p.getAdquirido(), p.getCaducidad());
 	}
 
 	public Producto toModel(ProductoDTO p) {
-		return new Producto(p.getDescripcion(), p.getAdquirido(), p.getCaducidad(),getPrecio());
+		return new Producto(p.getDescripcion(), p.getAdquirido(), p.getCaducidad(),p.getPrecio());
 	}
 	
 	public List<ProductoDTO> toDTO(List<Producto> l) {

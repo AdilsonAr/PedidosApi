@@ -34,13 +34,13 @@ public class ProductoController {
 	ProductoDTO prodto;
 	
 	@PostMapping("/create")
-	public String create( @RequestBody ProductoDTO p) {
+	public String create(@RequestBody ProductoDTO p) {
 		Producto producto= productoService.create(prodto.toModel(p));
 		return "producto "+producto.getIdProducto() + "creado";
 	}
 	
 	@PutMapping("/update")
-	public String update( @RequestBody ProductoDTO p) {
+	public String update(@RequestBody ProductoDTO p) {
 		Producto producto= productoService.update(prodto.toModel(p));
 		return "producto "+producto.getIdProducto() + "modificado";
 	}

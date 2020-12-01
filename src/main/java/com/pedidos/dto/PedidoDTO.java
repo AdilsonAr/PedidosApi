@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.pedidos.model.Cliente;
 import com.pedidos.model.Pedido;
-
+@Component
 public class PedidoDTO{
 	private int idPedido;
 	private LocalDate fecha;

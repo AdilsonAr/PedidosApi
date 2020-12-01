@@ -3,8 +3,10 @@ package com.pedidos.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pedidos.model.Cliente;
+import org.springframework.stereotype.Component;
 
+import com.pedidos.model.Cliente;
+@Component
 public class ClienteDTO {
 	private int idCliente;
 	private String user;

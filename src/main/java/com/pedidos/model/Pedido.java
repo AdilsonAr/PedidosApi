@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +29,7 @@ public class Pedido{
 	@OneToMany(mappedBy = "pedido",cascade=CascadeType.ALL)
 	@JsonManagedReference(value="pedido-detalle")
 	private List<DetallePedido> detalles;
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="idCliente")
 	@JsonBackReference(value="pedido-cliente")
 	private Cliente cliente;

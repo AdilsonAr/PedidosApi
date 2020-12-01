@@ -3,10 +3,12 @@ package com.pedidos.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.pedidos.model.DetallePedido;
 import com.pedidos.model.Pedido;
 import com.pedidos.model.Producto;
-
+@Component
 public class DetallePedidoDTO {
 	private int idDetallePedido;
 	private int unidades;
