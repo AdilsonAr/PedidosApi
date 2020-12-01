@@ -62,8 +62,7 @@ public class PedidoController {
 	
 	@PostMapping("/create")
 	public String create(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha, @RequestParam("idCliente") int idCliente) {
-		Cliente cli=cliService.readid(idCliente);
-		Pedido p=pedidoService.create(pedidodto.toModel(new PedidoDTO(fecha,cli)));
+		Pedido p=pedidoService.create(pedidodto.toModel(new PedidoDTO(fecha,idCliente)));
 		return "pedido "+p.getIdPedido() + "creado";
 	}
 	
@@ -77,8 +76,7 @@ public class PedidoController {
 	
 	@PutMapping("/update")
 	public String update(@RequestParam("fecha") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate fecha, @RequestParam("idCliente") int idCliente) {
-		Cliente cli=cliService.readid(idCliente);
-		Pedido p=pedidoService.update(pedidodto.toModel(new PedidoDTO(fecha,cli)));
+		Pedido p=pedidoService.update(pedidodto.toModel(new PedidoDTO(fecha,idCliente)));
 		return "pedido "+p.getIdPedido() + "modificado";
 	}
 }

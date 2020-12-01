@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 import com.pedidos.dto.DetallePedidoDTO;
+import com.pedidos.dto.PedidoDTO;
+import com.pedidos.dto.ProductoDTO;
 import com.pedidos.model.DetallePedido;
 import com.pedidos.model.Pedido;
 import com.pedidos.model.Producto;
@@ -32,6 +34,10 @@ public class DetallePedidoController {
 	ProductoService productoService;
 	@Autowired
 	DetallePedidoDTO detalledto;
+	@Autowired
+	PedidoDTO pedto;
+	@Autowired
+	ProductoDTO prodto;
 	
 	@GetMapping("/readpedido")
 	public List<DetallePedidoDTO> readpedido(@RequestParam("id") int id) {
@@ -54,7 +60,7 @@ public class DetallePedidoController {
 	public String create(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido,@RequestParam("unidades") int u) {
 		Producto producto=productoService.readId(idProducto);
 		Pedido pedido=pedidoService.readId(idPedido);
-		DetallePedidoDTO detalle=new DetallePedidoDTO(u, pedido,producto);
+		DetallePedidoDTO detalle=new DetallePedidoDTO(u,pedto.toDTO(pedido),prodto.toDTO(producto));
 		detalleService.create(detalledto.toModel(detalle));
 		return "detalle "+detalle.getIdDetallePedido()+"creado";
 	}
@@ -63,7 +69,7 @@ public class DetallePedidoController {
 	public String update(@RequestParam("idProducto") int idProducto,@RequestParam("idPedido") int idPedido,@RequestParam("unidades") int u) {
 		Producto producto=productoService.readId(idProducto);
 		Pedido pedido=pedidoService.readId(idPedido);
-		DetallePedidoDTO detalle=new DetallePedidoDTO(u,pedido,producto);
+		DetallePedidoDTO detalle=new DetallePedidoDTO(u,pedto.toDTO(pedido),prodto.toDTO(producto));
 		detalleService.update(detalledto.toModel(detalle));
 		return "detalle "+detalle.getIdDetallePedido()+"modificado";
 	}

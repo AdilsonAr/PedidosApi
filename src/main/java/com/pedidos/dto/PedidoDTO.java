@@ -4,15 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pedidos.model.Cliente;
 import com.pedidos.model.Pedido;
+import com.pedidos.service.ClienteService;
 @Component
 public class PedidoDTO{
+	@Autowired
+	ClienteService cliService;
 	private int idPedido;
 	private LocalDate fecha;
-	private Cliente cliente;
+	private int idCliente;
 	public int getIdPedido() {
 		return idPedido;
 	}
@@ -25,23 +28,23 @@ public class PedidoDTO{
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	public int getCliente() {
+		return idCliente;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setCliente(int cliente) {
+		this.idCliente = cliente;
 	}
-	public PedidoDTO(int idPedido, LocalDate fecha, Cliente cliente) {
+	public PedidoDTO(int idPedido, LocalDate fecha, int cliente) {
 		super();
 		this.idPedido = idPedido;
 		this.fecha = fecha;
-		this.cliente = cliente;
+		this.idCliente = cliente;
 	}
 	
-	public PedidoDTO(LocalDate fecha, Cliente cliente) {
+	public PedidoDTO(LocalDate fecha, int cliente) {
 		super();
 		this.fecha = fecha;
-		this.cliente = cliente;
+		this.idCliente = cliente;
 	}
 	
 	public PedidoDTO() {
@@ -50,11 +53,11 @@ public class PedidoDTO{
 	}
 	
 	public Pedido toModel(PedidoDTO p) {
-		return new Pedido(p.getFecha(),p.cliente);
+		return new Pedido(p.getFecha(),cliService.readid(p.idCliente));
 	}
 	
 	public PedidoDTO toDTO(Pedido p) {
-		return new PedidoDTO(p.getIdPedido(),p.getFecha(),p.getCliente());
+		return new PedidoDTO(p.getIdPedido(),p.getFecha(),p.getCliente().getIdCliente());
 	}
 	
 	public List<PedidoDTO> toDTO(List<Pedido> l) {
